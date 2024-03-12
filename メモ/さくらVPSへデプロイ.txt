@@ -1,0 +1,29 @@
+"【補足情報】
+
+さくらのVPS、OSはUbuntuを選択★
+
+Ubuntuの情報
+
+OS：Ubuntu 22.04 amd64
+
+管理ユーザー名	ubuntu
+管理ユーザーのパスワード	yubun24_
+
+
+（ローカルのデータを最初コピーする時）
+git clone https://github.com/maruyu5/docker-design_search_app2.git
+
+（2回目以降アップデートする時）
+cd docker-design_search_app2
+git pull origin master
+
+
+（これでサーバーが起動する）
+「docker-design_search_app2」フォルダの中に「Dockerfile」などが入っている。
+cd docker-design_search_app2
+sudo docker-compose up
+
+
+（これが本番のURLとなる）
+49.212.144.204:7000
+http://49.212.144.204:7000/inquiry"

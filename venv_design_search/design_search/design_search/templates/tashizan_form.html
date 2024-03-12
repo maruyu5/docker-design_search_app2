@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8">
+    <title>足し算のフォーム</title>
+  </head>
+
+  <body>
+    <form method="POST">{% csrf_token %}
+      <input type="text" name="numbers1" placeholder="数字を入力して下さい"/>
+      <input type="text" name="numbers2" placeholder="数字を入力して下さい"/>
+      <button type="submit">送信</button>
+    </form>
+
+    <p>左の入力欄の数字：{{numbers1}}</p>
+    <p>右の入力欄の数字：{{numbers2}}</p>
+    <p>合計の数字：{{result}}</p>
+  </body>
+</html>

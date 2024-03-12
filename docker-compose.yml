@@ -1,0 +1,20 @@
+version: "3"
+services:
+  db:
+    image: postgres
+    environment:
+      - POSTGRES_DB=postgres
+      - POSTGRES_USER=root
+      - POSTGRES_PASSWORD=django
+    volumes:
+      - ./venv_design_search/dbdata:/var/lib/postgresql/data
+  venv_design_search:
+    build: .
+    command: python3 manage.py runserver 0.0.0.0:7000
+    ports:
+      - "7000:7000"
+    container_name: venv_design_search
+    volumes:
+      - ./venv_design_search/design_search:/usr/src/venv_design_search
+    depends_on:
+      - db

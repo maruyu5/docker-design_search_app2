@@ -1,0 +1,3 @@
+‚Ü‚¸Docker‚ğ—§‚¿ã‚°‚é
+cd C:\docker\docker-design_search_app2
+docker-compose up

@@ -1,0 +1,51 @@
+<!-- detail_inquiry.html -->
+
+{% extends 'base1.html' %}
+
+{% block title %}詳細 | Design Management System{% endblock %}
+
+{% block active_inquiry %}active{% endblock %}
+
+{% block contents %}
+  <div class="container">
+    <div class="my-div-style">
+
+      <h1 class="display-5">
+        <a href="{% url 'design_search:inquiry_list' %}">Design Management System</a> 詳細
+      </h1>
+
+      <div>
+        <p><strong>指示書No:</strong> {{ inquiry.shiji_no }}</p>
+        <p><strong>品名:</strong> {{ inquiry.shiji_name }}</p>
+        <p><strong>制作者:</strong> {{ inquiry.name }}</p>
+        <p><strong>採用の可否:</strong> {{ inquiry.possibility }}</p>
+        <p><strong>再利用:</strong> {{ inquiry.reuse }}</p>
+        <p><strong>メールアドレス:</strong> {{ inquiry.email }}</p>
+        <p><strong>用途:</strong> {{ inquiry.purpose }}</p>
+        <p><strong>備考:</strong> {{ inquiry.message }}</p>
+        <p><strong>デザインの種類:</strong> {{ inquiry.genres }}</p>
+
+        <!-- デザイン画像 -->
+        {% if inquiry.design_image %}
+            <p><strong>デザイン画像:</strong></p>
+            <img src="{{ inquiry.design_image.url }}" alt="Design Image" style="max-width: 800px; max-height: 800px;">
+        {% else %}
+            <p>No Design Image</p>
+        {% endif %}
+
+        <!-- PDFファイル -->
+        {% if inquiry.pdf_file %}
+            <p><strong>PDFファイル:</strong></p>
+            <a href="{{ inquiry.pdf_file.url }}" target="_blank">PDF File</a>
+        {% else %}
+            <p>No PDF File</p>
+        {% endif %}
+
+        <!-- 他の詳細情報があれば適宜追加 -->
+
+        <p><a href="{% url 'design_search:inquiry_list' %}">一覧に戻る</a></p>
+      </div>
+      
+    </div>
+  </div>
+{% endblock %}

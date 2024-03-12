@@ -1,0 +1,27 @@
+<!-- edit_inquiry.html -->
+
+{% extends 'base1.html' %}
+
+{% block title %}編集 | Design Management System{% endblock %}
+
+{% block active_inquiry %}active{% endblock %}
+
+{% block contents %}
+  <div class="container">
+    <div class="my-div-style">
+
+      <h1 class="display-5">
+        <a href="{% url 'design_search:inquiry_list' %}">Design Management System</a> 編集
+      </h1>
+
+      <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_p }}
+
+        <button type="submit">保存</button>
+      </form>
+
+      
+    </div>
+  </div>
+{% endblock %}
