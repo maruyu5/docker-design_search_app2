@@ -1,1 +1,4 @@
 Gitの監視下で尚且つさくらVPSにデプロイするデータ
+
+通常はsettings.py（C:\docker\docker-design_search_app2\venv_design_search\design_search\design_search_project）はさくらのVPS環境（http://49.212.144.204:7000/inquiry_list/）を指している為、
+ローカルのDockerで起動させるにはsettings.pyをそれ用に変更する必要がある。
