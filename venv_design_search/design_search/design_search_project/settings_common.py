@@ -15,19 +15,10 @@ SECRET_KEY = 'django-insecure-n@fb0toseft3#yry(ipwl@axa)=)x#&^yxs@4i3e51%7@c0t6v
 
 # SECURITY WARNING: don't run with debug turned on in production!
 
-# ★下記のコード、開発環境はsettings_dev.py、本番環境はsettings.pyで上書きされます
-DEBUG = False
-ALLOWED_HOSTS = ['49.212.144.204']
-
-# settings.py
-from .settings_common import *
-
-# settings_dev.py
-from .settings_common import *
-
+# ★下記のコード、開発環境はsettings_dev.py、本番環境はsettings.pyで上書きされます←その予定が上手くいかず、全OKに変更
 DEBUG = True
-ALLOWED_HOSTS = []
-# ★上記のコード、開発環境はsettings_dev.py、本番環境はsettings.pyで上書きされます
+ALLOWED_HOSTS = ['*']
+# ★上記のコード、開発環境はsettings_dev.py、本番環境はsettings.pyで上書きされます←その予定が上手くいかず、全OKに変更
 
 
 
