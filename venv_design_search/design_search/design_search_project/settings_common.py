@@ -14,9 +14,15 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-n@fb0toseft3#yry(ipwl@axa)=)x#&^yxs@4i3e51%7@c0t6v'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
 
-ALLOWED_HOSTS = []
+# ★下記のコード、開発環境はsettings_dev.py、本番環境はsettings.pyで上書きされます
+DEBUG = True
+ALLOWED_HOSTS = ['*']
+# ★上記のコード、開発環境はsettings_dev.py、本番環境はsettings.pyで上書きされます
+
+
+
+
 
 
 # Application definition
