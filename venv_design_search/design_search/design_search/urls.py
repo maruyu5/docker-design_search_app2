@@ -22,6 +22,7 @@ urlpatterns = [
     path('edit_inquiry/<int:inquiry_id>/', EditInquiryView.as_view(), name='edit_inquiry'),
     path('detail_inquiry/<int:inquiry_id>/', DetailInquiryView.as_view(), name='detail_inquiry'),
     # path('email/', views.email_form, name='email_form'),
+    path('hantei/', views.HanteiView.as_view(), name="hantei"),
 ]
 
 # 開発環境でのみメディアファイルを提供する設定を追加

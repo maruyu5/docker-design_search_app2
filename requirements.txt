@@ -52,3 +52,4 @@ webdriver-manager==4.0.0
 Werkzeug==2.3.6
 wsproto==1.2.0
 psycopg2
+tensorflow

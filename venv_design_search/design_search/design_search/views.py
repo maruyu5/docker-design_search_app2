@@ -361,3 +361,61 @@ class DetailInquiryView(View):
 
 #     return render(request, 'email_form.html', {'form': form})
 
+
+
+
+class HanteiView(generic.TemplateView):
+    model = Post
+    template_name = "hantei.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        import numpy as np
+        import os
+        from tensorflow.keras.models import Sequential, model_from_json
+        from tensorflow.keras.utils import to_categorical
+        from tensorflow.keras.preprocessing.image import load_img, img_to_array
+
+        # 入力画像のパラメータ
+        img_width = 32  # 入力画像の幅
+        img_height = 32  # 入力画像の高さ
+
+        # スクリプトのディレクトリパスを取得
+        SCRIPT_DIR = os.path.dirname(__file__)
+        # 保存先ディレクトリの相対パス
+        SAVE_DATA_DIR_REL_PATH = "templates/Keras_CNN/"
+        # 保存先ディレクトリの絶対パスを生成
+        SAVE_DATA_DIR_PATH = os.path.join(SCRIPT_DIR, SAVE_DATA_DIR_REL_PATH)
+
+        # ラベル
+        labels = ['土鍋', 'マグカップ', 'やかん']
+
+        # 保存したモデル構造の読み込み
+        model = model_from_json(open(SAVE_DATA_DIR_PATH + "model.json", 'r').read())
+        # 保存した学習済みの重みを読み込み
+        model.load_weights(SAVE_DATA_DIR_PATH + "weight.hdf5")
+
+        # 画像の読み込み（32×32にリサイズ）
+        # 正規化, 4次元配列に変換（モデルの入力が4次元なので合わせる）
+        img = load_img(SAVE_DATA_DIR_PATH + "hantei/test.jpg", target_size=(img_width, img_height))
+        img = img_to_array(img)
+        img = img.astype('float32') / 255.0
+        img = np.array([img])
+
+        # 分類機に入力データを与えて予測（出力：各クラスの予想確率）
+        y_pred = model.predict(img)
+
+        # 予測結果の表示
+        print("y_pred:", y_pred)  # 出力値
+        number_pred = np.argmax(y_pred)  # 最も確率の高い要素番号
+        print("number_pred:", number_pred)  # 最も確率の高い要素番号
+        label_pred = labels[int(number_pred)]  # 予測ラベル（最も確率の高い要素）
+        print('label_pred:', label_pred)  
+
+        # contextに値を代入
+        context['hantei1'] = y_pred
+        context['hantei2'] = number_pred
+        context['hantei3'] = label_pred
+
+        return context
