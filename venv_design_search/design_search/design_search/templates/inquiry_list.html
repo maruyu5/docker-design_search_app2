@@ -5,128 +5,141 @@
 {% block active_inquiry %}active{% endblock %}
 
 {% block contents %}
-<div class="container">
-    <div class="my-div-style">
+    <div id="loader-wrap">
+        <div class="loader"></div>
+    </div>
 
-        <h1 class="display-5"><a href="{% url 'design_search:inquiry_list' %}">Design Management System</a></h1>
+    <div class="">
+        <div class="curved">
+            <form method="get" action="" class="search-form">
+                <div class="input-group input-group-sm me-3">
+                    <label for="searchColumn" class="input-group-text">検索列</label>
+                    <select id="searchColumn" class="form-select" name="search_column" >
+                        <option value="all" {% if search_column == 'all' %}selected{% endif %}>全て</option>
+                        <option value="shiji_no" {% if search_column == 'shiji_no' %}selected{% endif %}>指示書No</option>
+                        <option value="shiji_name" {% if search_column == 'shiji_name' %}selected{% endif %}>品名</option>
+                        <option value="name" {% if search_column == 'name' %}selected{% endif %}>制作者</option>
+                        <option value="possibility" {% if search_column == 'possibility' %}selected{% endif %}>採用の可否</option>
+                        <option value="reuse" {% if search_column == 'reuse' %}selected{% endif %}>再利用</option>
+                        <option value="email" {% if search_column == 'email' %}selected{% endif %}>メールアドレス</option>
+                        <option value="purpose" {% if search_column == 'purpose' %}selected{% endif %}>用途</option>
+                        <option value="message" {% if search_column == 'message' %}selected{% endif %}>備考</option>
+                    </select>
+                </div>
 
-        <div class="mt-5">
-            <form method="get" action="">
-                <label for="searchColumn">検索列:</label>
-                <select id="searchColumn" name="search_column" >
-                    <option value="all" {% if search_column == 'all' %}selected{% endif %}>全て</option>
-                    <option value="shiji_no" {% if search_column == 'shiji_no' %}selected{% endif %}>指示書No</option>
-                    <option value="shiji_name" {% if search_column == 'shiji_name' %}selected{% endif %}>品名</option>
-                    <option value="name" {% if search_column == 'name' %}selected{% endif %}>制作者</option>
-                    <option value="possibility" {% if search_column == 'possibility' %}selected{% endif %}>採用の可否</option>
-                    <option value="reuse" {% if search_column == 'reuse' %}selected{% endif %}>再利用</option>
-                    <option value="email" {% if search_column == 'email' %}selected{% endif %}>メールアドレス</option>
-                    <option value="purpose" {% if search_column == 'purpose' %}selected{% endif %}>用途</option>
-                    <option value="message" {% if search_column == 'message' %}selected{% endif %}>備考</option>
-                </select>
+                <div class="input-group input-group-sm me-3">
+                    <label for="searchText" class="input-group-text">検索するテキスト</label>
+                    <input type="text" id="searchText" class="form-control" name="search_text" value="{{ search_text }}">
+                </div>
 
-                <label for="searchText">検索するテキスト:</label>
-                <input type="text" id="searchText" name="search_text" value="{{ search_text }}">
+                <div class="input-group input-group-sm me-3">
+                    <label for="searchGenres" class="input-group-text">デザインの種類</label>
+                    <select id="searchGenres" class="form-select" name="search_genres">
+                        <option value="" {% if not search_genres %}selected{% endif %}>全て</option>
+                        <option value="シンプル" {% if search_genres == 'シンプル' %}selected{% endif %}>シンプル</option>
+                        <option value="イラストレーション" {% if search_genres == 'イラストレーション' %}selected{% endif %}>イラストレーション</option>
+                        <option value="写真重視" {% if search_genres == '写真重視' %}selected{% endif %}>写真重視</option>
+                        <option value="レトロ" {% if search_genres == 'レトロ' %}selected{% endif %}>レトロ</option>
+                        <option value="カラフル" {% if search_genres == 'カラフル' %}selected{% endif %}>カラフル</option>
+                        <option value="情報重視" {% if search_genres == '情報重視' %}selected{% endif %}>情報重視</option>
+                        <option value="タイポグラフィ" {% if search_genres == 'タイポグラフィ' %}selected{% endif %}>タイポグラフィ</option>
+                    </select>
+                </div>
 
-
-
-
-                <label for="searchGenres">デザインの種類:</label>
-                <select id="searchGenres" name="search_genres">
-                    <option value="" {% if not search_genres %}selected{% endif %}>全て</option>
-                    <option value="シンプル" {% if search_genres == 'シンプル' %}selected{% endif %}>シンプル</option>
-                    <option value="イラストレーション" {% if search_genres == 'イラストレーション' %}selected{% endif %}>イラストレーション</option>
-                    <option value="写真重視" {% if search_genres == '写真重視' %}selected{% endif %}>写真重視</option>
-                    <option value="レトロ" {% if search_genres == 'レトロ' %}selected{% endif %}>レトロ</option>
-                    <option value="カラフル" {% if search_genres == 'カラフル' %}selected{% endif %}>カラフル</option>
-                    <option value="情報重視" {% if search_genres == '情報重視' %}selected{% endif %}>情報重視</option>
-                    <option value="タイポグラフィ" {% if search_genres == 'タイポグラフィ' %}selected{% endif %}>タイポグラフィ</option>
-                </select>
-
-
-
-
-                <button type="submit">検索</button>
+                <button type="submit" class="col-auto btn btn-sm search-btn">検索</button>
             </form>
         </div>
-
-        <div>
-            <table class="table table-striped">
-                <thead>
-                    <tr>
-                        <th>詳細</th>
-                        <th>投稿日時</th>
-                        <th>指示書No</th>
-                        <th>品名</th>
-                        <th>制作者</th>
-                        <th>採用の可否</th>
-                        <th>再利用</th>
-                        <th>メールアドレス</th>
-                        <th>用途</th>
-                        <th>備考</th>
-                        <th>デザイン画像</th>
-                        <th>PDFファイル</th>
-                        <th>デザインの種類</th>
-                        <th>編集</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for inquiry in inquiries %}
+        
+        <div class="bg-white pt-4 pb-5 mb-5">
+            <div style="max-width: 1480px; margin: 0 auto;">
+                <table class="table table-striped mt-0">
+                    <thead>
                         <tr>
-                            <td><a href="{% url 'design_search:detail_inquiry' inquiry.id %}"><button>詳細</button></a></td>
-                            <td>{{ inquiry.created_at }}</td>
-                            <td>{{ inquiry.shiji_no }}</td>
-                            <td>{{ inquiry.shiji_name }}</td>
-                            <td>{{ inquiry.name }}</td>
-                            <td>{{ inquiry.possibility }}</td>
-                            <td>{{ inquiry.reuse }}</td>
-                            <td>{{ inquiry.email }}</td>
-                            <td>{{ inquiry.purpose }}</td>
-                            <td>{{ inquiry.message }}</td>
-                            <td>
-                                {% if inquiry.design_image %}
-                                    <img src="{{ inquiry.design_image.url }}" alt="Design Image" style="max-width: 100px; max-height: 100px;">
-                                {% else %}
-                                    No Image
-                                {% endif %}
-                            </td>
-                            <td>
-                                {% if inquiry.pdf_file %}
-                                    <a href="{{ inquiry.pdf_file.url }}" target="_blank">PDF File</a>
-                                {% else %}
-                                    No PDF
-                                {% endif %}
-                            </td>
-                            <td>{{ inquiry.genres }}</td>
-                            <td>
-                                <a href="{% url 'design_search:edit_inquiry' inquiry.id %}">
-                                    <button>編集</button>
-                                </a>
-                            </td>
+                            <th>詳細</th>
+                            <th>投稿日時</th>
+                            <th>指示書No</th>
+                            <th>品名</th>
+                            <th>制作者</th>
+                            <th>採用の可否</th>
+                            <th>再利用</th>
+                            <th>メールアドレス</th>
+                            <th>用途</th>
+                            <th>備考</th>
+                            <th>デザイン画像</th>
+                            <th>PDFファイル</th>
+                            <th>デザインの種類</th>
+                            <th>編集</th>
                         </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
-        </div>
-
-        <div class="pagination">
-            <span class="step-links">
+                    </thead>
+                    <tbody class="table-group-divider">
+                        {% for inquiry in inquiries %}
+                            <tr>
+                                <td>
+                                    <a href="{% url 'design_search:detail_inquiry' inquiry.id %}">
+                                        <span class="material-symbols-outlined" data-bs-toggle="tooltip" title="詳細を表示する">description</span>
+                                    </a>
+                                </td>
+                                <td>{{ inquiry.created_at }}</td>
+                                <td>{{ inquiry.shiji_no }}</td>
+                                <td>{{ inquiry.shiji_name }}</td>
+                                <td>{{ inquiry.name }}</td>
+                                <td>{{ inquiry.possibility }}</td>
+                                <td>{{ inquiry.reuse }}</td>
+                                <td>{{ inquiry.email }}</td>
+                                <td>{{ inquiry.purpose }}</td>
+                                <td>{{ inquiry.message }}</td>
+                                <td>
+                                    {% if inquiry.design_image %}
+                                        <a href="{{ inquiry.design_image.url }}" target="_blank" class="list-design-image"><img src="{{ inquiry.design_image.url }}" alt="Design Image"></a>
+                                    {% else %}
+                                        No Image
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    {% if inquiry.pdf_file %}
+                                        <a href="{{ inquiry.pdf_file.url }}" target="_blank"><img class="pdf_icon" src="../../static/template_pattern1/assets/img/pdf_icon.png" alt=""></a>
+                                    {% else %}
+                                        No PDF
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    {% if inquiry.genres %}
+                                    {{ inquiry.genres }}
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    <a href="{% url 'design_search:edit_inquiry' inquiry.id %}">
+                                        <span class="material-symbols-outlined" data-bs-toggle="tooltip" title="編集する">stylus</span>
+                                    </a>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            
+            
+            <div class="pagination-wrap mt-5">
                 {% if inquiries.has_previous %}
-                    <a href="?page=1{% if search_column %}&search_column={{ search_column }}{% endif %}{% if search_text %}&search_text={{ search_text }}{% endif %}">&laquo; first</a>
-                    <a href="?page={{ inquiries.previous_page_number }}{% if search_column %}&search_column={{ search_column }}{% endif %}{% if search_text %}&search_text={{ search_text }}{% endif %}">previous</a>
+                    <a href="?page=1{% if search_column %}&search_column={{ search_column }}{% endif %}{% if search_text %}&search_text={{ search_text }}{% endif %}" class="me-3"><span class="material-symbols-outlined" data-bs-toggle="tooltip" title="最初のページへ">first_page</span></a>
+                    <a href="?page={{ inquiries.previous_page_number }}{% if search_column %}&search_column={{ search_column }}{% endif %}{% if search_text %}&search_text={{ search_text }}{% endif %}" class="me-3"><span class="material-symbols-outlined" data-bs-toggle="tooltip" title="前のページへ">chevron_left</span></a>
+                {% else %}
+                    <span class="is-disabled me-3"><span class="material-symbols-outlined">first_page</span></span>
+                    <span class="is-disabled me-3"><span class="material-symbols-outlined">chevron_left</span></span>
                 {% endif %}
 
-                <span class="current">
-                    Page {{ inquiries.number }} of {{ inquiries.paginator.num_pages }}.
+                <span class="me-3">
+                    {{ inquiries.number }} / {{ inquiries.paginator.num_pages }}
                 </span>
 
                 {% if inquiries.has_next %}
-                    <a href="?page={{ inquiries.next_page_number }}{% if search_column %}&search_column={{ search_column }}{% endif %}{% if search_text %}&search_text={{ search_text }}{% endif %}">next</a>
-                    <a href="?page={{ inquiries.paginator.num_pages }}{% if search_column %}&search_column={{ search_column }}{% endif %}{% if search_text %}&search_text={{ search_text }}{% endif %}">last &raquo;</a>
+                    <a href="?page={{ inquiries.next_page_number }}{% if search_column %}&search_column={{ search_column }}{% endif %}{% if search_text %}&search_text={{ search_text }}{% endif %}" class="me-3"><span class="material-symbols-outlined" data-bs-toggle="tooltip" title="次のページへ">chevron_right</span></a>
+                    <a href="?page={{ inquiries.paginator.num_pages }}{% if search_column %}&search_column={{ search_column }}{% endif %}{% if search_text %}&search_text={{ search_text }}{% endif %}"><span class="material-symbols-outlined" data-bs-toggle="tooltip" title="最後のページへ">last_page</span></a>
+                {% else %}
+                    <span class="is-disabled me-3"><span class="material-symbols-outlined">chevron_right</span></span>
+                    <span class="is-disabled"><span class="material-symbols-outlined">last_page</span></span>
                 {% endif %}
-            </span>
+            </div>
         </div>
-
     </div>
-</div>
 {% endblock %}

@@ -222,7 +222,7 @@ class InquiryView(generic.FormView):
 
     def form_valid(self, form):
         form.send_email()
-        messages.success(self.request, 'Design Management Systemに登録しました。')
+        messages.success(self.request, '登録しました。')
         logger.info('Inquiry sent by {}'.format(form.cleaned_data['name']))
 
         # データベースに保存
@@ -360,8 +360,6 @@ class DetailInquiryView(View):
 #         form = EmailForm()
 
 #     return render(request, 'email_form.html', {'form': form})
-
-
 
 
 class HanteiView(generic.TemplateView):

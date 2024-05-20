@@ -40,8 +40,6 @@ class InquiryForm(forms.ModelForm):
         exclude = ['created_at']  # created_at を除外
         fields = '__all__'
 
-
-
     # カスタムのバリデーションやウィジェットの設定が必要な場合はここに追加
     widgets = {
         'genres': forms.Select(choices=GENRE_CHOICES),
@@ -61,6 +59,7 @@ class InquiryForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
+        self.label_suffix = " " #ラベルの末尾につくコロンを消す
 
         self.fields['shiji_no'].widget.attrs['class'] = 'form-control'
         self.fields['shiji_no'].widget.attrs['placeholder'] = '指示書Noをここに入力してください。'
@@ -71,14 +70,24 @@ class InquiryForm(forms.ModelForm):
         self.fields['name'].widget.attrs['class'] = 'form-control'
         self.fields['name'].widget.attrs['placeholder'] = '制作者をここに入力してください。'
 
+        self.fields['possibility'].widget.attrs['class'] = 'form-select'
+
+        self.fields['reuse'].widget.attrs['class'] = 'form-select'
+
         self.fields['email'].widget.attrs['class'] = 'form-control'
         self.fields['email'].widget.attrs['placeholder'] = 'メールアドレスをここに入力してください。'
 
         self.fields['purpose'].widget.attrs['class'] = 'form-control'
-        self.fields['purpose'].widget.attrs['placeholder'] = '用途をここに入力してください。例：Webサイト'
+        self.fields['purpose'].widget.attrs['placeholder'] = '用途をここに入力してください。（例：Webサイト）'
 
         self.fields['message'].widget.attrs['class'] = 'form-control'
         self.fields['message'].widget.attrs['placeholder'] = '備考をここに入力してください。'
+        self.fields['message'].widget.attrs['rows'] = 3
+
+        self.fields['design_image'].widget.attrs['class'] = 'form-control'
+
+        self.fields['pdf_file'].widget.attrs['class'] = 'form-control'
+        self.fields['pdf_file'].widget.attrs['accept'] = '.pdf'
 
     # 既存のフォームセットに新しいフィールドを追加
     def clean(self):
